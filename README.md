@@ -7,7 +7,7 @@ As [Nate Cohn described](https://www.nytimes.com/2020/11/10/upshot/polls-what-we
 
 So instead of just scrapping this map idea, I still think it tells a story of how Red states came to take the pandemic more seriously and how Republican governers would later institute mask mandates albeit reluctantly. Most notably Iowa as detailed in the NYT [How Iowa’s Governor Went From Dismissing Mask Mandates to Ordering One Herself](https://www.nytimes.com/2020/11/18/us/coronavirus-mask-mandate-iowa-reynolds.html). You can see in the map that in the early months it was just North-eastern states specifically New York getting hit hard, but by September it was all red states. And now it's everywhere. The whole map is nearly covered.
 
-I already knew the partisan flip in Covid severity was true thanks to others who had already performed similar analysis:
+I already knew the partisan flip in Covid severity was true thanks to others who had already performed similar analysis...
 
 [NYT: As Covid Has Become a Red-State Problem, Too, Have Attitudes Changed?](https://www.nytimes.com/2020/07/30/upshot/coronavirus-republican-voting.html)
 !['Jed Kolko'](https://pbs.twimg.com/media/EjlAZp8WsAALklU?format=jpg&name=small)
@@ -15,6 +15,8 @@ I already knew the partisan flip in Covid severity was true thanks to others who
 
 
 I went about building this using Mapbox GL JS, [Lo Bénichou's Albers USA map style](https://blog.mapbox.com/mapping-the-us-elections-guide-to-albers-usa-projection-in-studio-45be6bafbd7e), and of course the [nyt covid state-level data](https://github.com/nytimes/covid-19-data).
+
+...But I wanted it in map form with a time slider!
 
 After doing some data pre-processing using Python's Pandas library by aggregating the cases by month, and merging it with Census state-level population estimates along with 2016 election results to indicate red state or blue state, I was able to begin mapping.
 
