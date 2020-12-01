@@ -25,4 +25,6 @@ Well good news is I quickly(3 hours later) figured out a hacky workaround. I add
 All in all I think this was a good experience building the map and playing around with covid data. I think some ideas for next time are maybe using more granular data like county or 7-day moving average, instead of state and month.
 
 
-\* One last note if you are trying to use the [Mapbox Albers USA map style](https://www.mapbox.com/elections/albers-usa-projection-style), I think there's a small typo in the albersusa tileset table of properties for type "state". I think it should be "state_name" instead of just "name" like in the county type. I initially wasn't able to call this property until I figured out this bug. 
+\* One note if you are trying to use the [Mapbox Albers USA map style](https://www.mapbox.com/elections/albers-usa-projection-style), I think there's a small typo in the albersusa tileset table of properties for type "state". I think it should be "state_name" instead of just "name" like in the county type. I initially wasn't able to call this property until I figured out this bug. 
+
+\** Ah ok so apparently the filters + feature-state feature request is known to the Mapbox team, but [something something](https://github.com/mapbox/mapbox-gl-js/issues/8487) about implementing it would not be "performant with the current architecture" 
