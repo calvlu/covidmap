@@ -7,7 +7,7 @@ As [Nate Cohn described](https://www.nytimes.com/2020/11/10/upshot/polls-what-we
 
 So instead of just scrapping this map, I still think it tells a story of how Red states came to take the pandemic more seriously and how Republican governers would later institute mask mandates albeit reluctantly. Most notably Iowa as detailed in the NYT [How Iowa’s Governor Went From Dismissing Mask Mandates to Ordering One Herself](https://www.nytimes.com/2020/11/18/us/coronavirus-mask-mandate-iowa-reynolds.html)
 
-I went about building this using Mapbox GL JS, and using [Lo Bénichou's Albers USA map style](https://blog.mapbox.com/mapping-the-us-elections-guide-to-albers-usa-projection-in-studio-45be6bafbd7e) and of course the [nyt covid state-level data](https://github.com/nytimes/covid-19-data).
+I went about building this using Mapbox GL JS, [Lo Bénichou's Albers USA map style](https://blog.mapbox.com/mapping-the-us-elections-guide-to-albers-usa-projection-in-studio-45be6bafbd7e), and of course the [nyt covid state-level data](https://github.com/nytimes/covid-19-data).
 
 After doing some data pre-processing using Pandas by aggregating the cases by month and merging it with Census state-level population estimates and 2016 results to indicate red state or blue state, I was able to begin mapping. 
 
