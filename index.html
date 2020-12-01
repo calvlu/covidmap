@@ -197,10 +197,8 @@
 
         map.getCanvas().style.cursor = 'pointer';
         const description = `
-        <p>County Name: ${e.features[0].properties.state_name}</p>
-        <p>County FIPS: ${e.features[0].properties.state_fips}</p>
-        <p>Feature ID: ${e.features[0].id}</p>
-        <p>Contributions:  ${e.features[0].state.case_rate} cases per 100k</p>`;
+        <p>State: ${e.features[0].properties.state_name}</p>
+        <p>Cases per 100k: ${Math.round(e.features[0].state.case_rate*100)/100}</p>`;
         
         popup
           .setLngLat(e.lngLat)
