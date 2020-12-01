@@ -10,8 +10,8 @@ So instead of just scrapping this map idea, I still think it tells a story of ho
 I already knew the partisan flip in Covid severity was true thanks to others who had already performed similar analysis:
 
 [NYT: As Covid Has Become a Red-State Problem, Too, Have Attitudes Changed?](https://www.nytimes.com/2020/07/30/upshot/coronavirus-republican-voting.html)
-![Jed Kolko](https://pbs.twimg.com/media/EjlAZp8WsAALklU?format=jpg&name=small)
-![William H. Frey](https://i0.wp.com/www.brookings.edu/wp-content/uploads/2020/10/20201008_Metro_COVIDSpread_Fig2.png?w=768&crop=0%2C0px%2C100%2C9999px&ssl=1)
+!['Jed Kolko'](https://pbs.twimg.com/media/EjlAZp8WsAALklU?format=jpg&name=small)
+!['William H. Frey'](https://i0.wp.com/www.brookings.edu/wp-content/uploads/2020/10/20201008_Metro_COVIDSpread_Fig2.png?w=768&crop=0%2C0px%2C100%2C9999px&ssl=1)
 
 
 I went about building this using Mapbox GL JS, [Lo Bénichou's Albers USA map style](https://blog.mapbox.com/mapping-the-us-elections-guide-to-albers-usa-projection-in-studio-45be6bafbd7e), and of course the [nyt covid state-level data](https://github.com/nytimes/covid-19-data).
