@@ -197,7 +197,7 @@
 
         map.getCanvas().style.cursor = 'pointer';
         const description = `
-        <p>State: ${e.features[0].properties.state_name}</p>
+        <h3>${e.features[0].properties.state_name}</h3>
         <p>Cases per 100k: ${Math.round(e.features[0].state.case_rate*100)/100}</p>`;
         
         popup
