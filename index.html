@@ -12,7 +12,7 @@
 
   <style>
     body { margin: 0; padding: 0; }
-	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 </style>
 </head>
 
@@ -41,12 +41,6 @@
         margin: 0 0 10px;
     }
 
-    .map-overlay .legend .bar {
-        height: 10px;
-        width: 100%;
-        background: linear-gradient(to right, #fca107, #7f3121);
-    }
-
     .map-overlay input {
         background-color: transparent;
         display: inline-block;
@@ -56,30 +50,48 @@
         cursor: ew-resize;
     }
 </style>
-
-<div id="map"></div>
-<div class="map-overlay top">
+  <div id="map"></div>
+  <div class="map-overlay top">
     <div class="map-overlay-inner">
-        <h2>Covid cases > 500 per 100k</h2>
+        <h2>Red and blue states with new cases greater than 500 per 100,000 residents</h2>
         <label id="month"></label>
-        <input id="slider" type="range" min="0" max="11" step="1" value="0" />
+        <input id="slider" type="range" min="0" max="7" step="1" value="0" />
     </div>
-    <div class="map-overlay-inner">
-        <div id="legend" class="legend">
-            <div class="bar"></div>
-            <div>Magnitude (m)</div>
-        </div>
-    </div>
+
 </div>
 </body>
 <script type="text/javascript">
   mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fsdmx1IiwiYSI6ImNraDVrdno0MzBtcXEycW92dGtqbmRzOGMifQ.DcBDLkgaiyFIsaEr_389Xw';
   const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/calvlu/ckh6p780109gb19qrva1jeo3h',
+    style: 'mapbox://styles/calvlu/cki5qjkky0zie19qv3pb1ov7f',
     zoom: 3.8,
     center: [-3.632, 0.339]
   });
+  var months = [
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November'
+  ];
+
+  let setMonth = 0;
+
+  function filterBy(month) {
+    setMonth = month + 4;
+    //feature state does not work with filters
+    //var filters = ['==', ['get', 'month'], month];
+    //map.setFilter('albersusa-fill', filters);
+    //map.setFilter('albersusa-line', filters);
+
+    // Set the label to the month
+    document.getElementById('month').textContent = months[month];
+  }
+
 
   let hoveredStateId = null;
 
@@ -87,30 +99,6 @@
     closeButton: false,
     closeOnClick: false
   });
-
-var months = [
-'January',
-'February',
-'March',
-'April',
-'May',
-'June',
-'July',
-'August',
-'September',
-'October',
-'November',
-'December'
-];
- 
-function filterBy(month) {
-var filters = ['==', 'month', month];
-map.setFilter('albersusa-fill', filters);
- 
-// Set the label to the month
-document.getElementById('month').textContent = months[month];
-}
-
 
   map.on('load', () => {
 
@@ -122,7 +110,7 @@ document.getElementById('month').textContent = months[month];
       map.addSource('albersusa', {
         type: 'vector',
         url: 'mapbox://lobenichou.albersusa',
-        promoteId: 'name'
+        promoteId: 'state_fips'
       });
 
 
@@ -134,22 +122,22 @@ document.getElementById('month').textContent = months[month];
         'paint': {
           'fill-color':
           [
-          "match",
-          ["feature-state", "colorstate"],
-          "d",
-          "#6BA0C7",
-          "r",
-          "#CE575E",
-          "#CCC"
+            "match",
+            ["feature-state", "color"],
+            "b",
+            "#6BA0C7",
+            "r",
+            "#CE575E",
+            "#CCC"
 
           ],
           'fill-opacity': 0.9
           /*
           'fill-color': ['case',
-            ['!=', ['feature-state', 'caserate'], null],
+            ['!=', ['feature-state', 'color'], null],
             ['interpolate',
               ['linear'],
-              ['to-number', ['feature-state', 'caserate']],
+              ['to-number', ['feature-state', 'color']],
               0, '#ece2f0',
               // 5, '#a6bddb',
               10, '#1c9099'
@@ -160,7 +148,7 @@ document.getElementById('month').textContent = months[month];
         },
         'filter': ['==', ['get', 'type'], 'state']
       });
-/*
+
       map.addLayer({
         'id': 'albersusa-line',
         'type': 'line',
@@ -204,15 +192,16 @@ document.getElementById('month').textContent = months[month];
         }
       });
 
+
       map.on('mousemove', 'albersusa-fill', (e) => {
 
         map.getCanvas().style.cursor = 'pointer';
         const description = `
-        <p>County Name: ${e.features[0].properties.name}</p>
+        <p>County Name: ${e.features[0].properties.state_name}</p>
         <p>County FIPS: ${e.features[0].properties.state_fips}</p>
         <p>Feature ID: ${e.features[0].id}</p>
-        <p>Contributions:  ${d3.format("($.2f")(e.features[0].state.caserate)} per capita</p>`;
-	      
+        <p>Contributions:  ${e.features[0].state.case_rate} cases per 100k</p>`;
+        
         popup
           .setLngLat(e.lngLat)
           .setHTML(description)
@@ -233,25 +222,36 @@ document.getElementById('month').textContent = months[month];
         map.getCanvas().style.cursor = '';
         popup.remove();
       });
-*/
       filterBy(0);
+
       document
-        .getElementById('slider')
-        .addEventListener('input', function (e) {
+      .getElementById('slider')
+      .addEventListener('input', function (e) {
+        //remove here?
+        map.removeFeatureState({
+          source: 'albersusa',
+          sourceLayer: 'albersusa'
+        });
           var month = parseInt(e.target.value, 10);
           filterBy(month);
+          setStates(data);
+
         });
 
       const setStates = (data) => {
         data.forEach((row) => {
-          map.setFeatureState({
-            source: 'albersusa',
-            'sourceLayer': 'albersusa',
-            id: row.state
-          }, {
-            caserate: row.case_rate,
-            statecolor: row.color
-          })
+
+          if (row.month == setMonth) {
+            map.setFeatureState({
+              source: 'albersusa',
+              'sourceLayer': 'albersusa',
+              id: row.fips
+            }, {
+              color: row.color,
+              case_rate: row.case_rate,
+              month: row.month
+            })
+          }
         })
       }
 
