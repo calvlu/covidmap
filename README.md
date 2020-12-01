@@ -9,7 +9,7 @@ So instead of just scrapping this map, I still think it tells a story of how Red
 
 I went about building this using Mapbox GL JS, [Lo Bénichou's Albers USA map style](https://blog.mapbox.com/mapping-the-us-elections-guide-to-albers-usa-projection-in-studio-45be6bafbd7e), and of course the [nyt covid state-level data](https://github.com/nytimes/covid-19-data).
 
-After doing some data pre-processing using Pandas by aggregating the cases by month and merging it with Census state-level population estimates and 2016 results to indicate red state or blue state, I was able to begin mapping. 
+After doing some data pre-processing using Pandas by aggregating the cases by month, and merging it with Census state-level population estimates along with 2016 election results to indicate red state or blue state, I was able to begin mapping. 
 
 Following Lo Bénichou's guide on [Feature State API](https://blog.mapbox.com/mapping-the-us-elections-the-2020-edition-guide-to-feature-state-7f4f6f94eaf9) I was able to data join with the Albers USA map. However I quickly ran into a problem, which was that I wanted to build a filter to add to my time slider. The problem was according to Mapbox's style specification "The feature-state expression is not supported in filter expressions." :(
 
