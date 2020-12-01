@@ -13,10 +13,9 @@ I already knew the partisan flip in Covid severity was true thanks to others who
 !['Jed Kolko'](https://pbs.twimg.com/media/EjlAZp8WsAALklU?format=jpg&name=small)
 !['William H. Frey'](https://i0.wp.com/www.brookings.edu/wp-content/uploads/2020/10/20201008_Metro_COVIDSpread_Fig2.png?w=768&crop=0%2C0px%2C100%2C9999px&ssl=1)
 
+...But I wanted it in map form with a time slider!
 
 I went about building this using Mapbox GL JS, [Lo Bénichou's Albers USA map style](https://blog.mapbox.com/mapping-the-us-elections-guide-to-albers-usa-projection-in-studio-45be6bafbd7e), and of course the [nyt covid state-level data](https://github.com/nytimes/covid-19-data).
-
-...But I wanted it in map form with a time slider!
 
 After doing some data pre-processing using Python's Pandas library by aggregating the cases by month, and merging it with Census state-level population estimates along with 2016 election results to indicate red state or blue state, I was able to begin mapping.
 
