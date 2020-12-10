@@ -5,14 +5,15 @@ Like many people, my pre-election assumption was that the October wave of Covid 
 As [Nate Cohn described](https://www.nytimes.com/2020/11/10/upshot/polls-what-went-wrong.html):
 "Adding to the intrigue: There is no evidence that the president fared worse in coronavirus hot spots, contrary to the expectations of pundits or studies. Instead, Mr. Trump fared slightly better in places with high coronavirus cases than in places with lower coronavirus cases, controlling for demographics, based on the preliminary results by county so far. This is most obviously true in Wisconsin, one of the nation’s current hot spots and the battleground state where the polls underestimated Mr. Trump the most."
 
-So instead of just scrapping this map idea, I still think it tells a story of how Red states came to take the pandemic more seriously and how Republican governers would later institute mask mandates albeit reluctantly. Most notably Iowa as detailed in the NYT [How Iowa’s Governor Went From Dismissing Mask Mandates to Ordering One Herself](https://www.nytimes.com/2020/11/18/us/coronavirus-mask-mandate-iowa-reynolds.html). You can see in the map that the month of September is just all red states.
+So instead of just scrapping this map idea, I still think it tells a story of how Red states came to take the pandemic more seriously and how Republican governers would later institute mask mandates albeit reluctantly. Most notably Iowa as detailed in the NYT [How Iowa’s Governor Went From Dismissing Mask Mandates to Ordering One Herself](https://www.nytimes.com/2020/11/18/us/coronavirus-mask-mandate-iowa-reynolds.html). You can see in the map that in the early months it was just North-eastern states specifically New York getting hit hard, but by September it was all red states. And now it's everywhere. The whole map is nearly covered.
 
-I already knew the partisan flip in Covid severity was true thanks to others who had already performed similar analysis:
+I already knew the partisan flip in Covid severity was true thanks to others who had already performed similar analysis...
 
 [NYT: As Covid Has Become a Red-State Problem, Too, Have Attitudes Changed?](https://www.nytimes.com/2020/07/30/upshot/coronavirus-republican-voting.html)
-!['Jed Kolko'](https://pbs.twimg.com/media/EjlAZp8WsAALklU?format=jpg&name=small)
-!['William H. Frey'](https://i0.wp.com/www.brookings.edu/wp-content/uploads/2020/10/20201008_Metro_COVIDSpread_Fig2.png?w=768&crop=0%2C0px%2C100%2C9999px&ssl=1)
+<img src="https://pbs.twimg.com/media/EjlAZp8WsAALklU?format=jpg" height="350">
+<img src="https://i0.wp.com/www.brookings.edu/wp-content/uploads/2020/10/20201008_Metro_COVIDSpread_Fig2.png" height="800">
 
+...But I wanted it in map form with a time slider!
 
 I went about building this using Mapbox GL JS, [Lo Bénichou's Albers USA map style](https://blog.mapbox.com/mapping-the-us-elections-guide-to-albers-usa-projection-in-studio-45be6bafbd7e), and of course the [nyt covid state-level data](https://github.com/nytimes/covid-19-data).
 
