@@ -120,10 +120,8 @@
         'source': 'albersusa',
         'source-layer': 'albersusa',
         'paint': {
-          'fill-color':
-          [
-            "match",
-            ["feature-state", "color"],
+          'fill-color': [
+            "match", ["feature-state", "color"],
             "b",
             "#6BA0C7",
             "r",
@@ -161,8 +159,7 @@
         'paint': {
           'line-color': '#4b4b4b',
           'line-width': [
-            'case',
-            ['boolean', ['feature-state', 'hover'], false],
+            'case', ['boolean', ['feature-state', 'hover'], false],
             2,
             0
           ]
@@ -199,7 +196,7 @@
         const description = `
         <h3>${e.features[0].properties.state_name}</h3>
         <p>Cases / 100k: ${Math.round(e.features[0].state.case_rate*100)/100}</p>`;
-        
+
         popup
           .setLngLat(e.lngLat)
           .setHTML(description)
@@ -220,18 +217,19 @@
         map.getCanvas().style.cursor = '';
         popup.remove();
       });
-      filterBy(0);
+      //what is this
+      //filterBy(0);
 
       document
-      .getElementById('slider')
-      .addEventListener('input', function (e) {
-        //remove here?
-        map.removeFeatureState({
-          source: 'albersusa',
-          sourceLayer: 'albersusa'
-        });
-          var month = parseInt(e.target.value, 10);
-          filterBy(month);
+        .getElementById('slider')
+        .addEventListener('input', function(e) {
+          //remove here?
+          map.removeFeatureState({
+            source: 'albersusa',
+            sourceLayer: 'albersusa'
+          });
+          var m = parseInt(e.target.value, 10);
+          filterBy(m);
           setStates(data);
 
         });
@@ -255,6 +253,9 @@
 
       const setAfterLoad = (e) => {
         if (e.sourceId === 'albersusa' && e.isSourceLoaded) {
+          if (setMonth == 0) {
+            filterBy(0);
+          }
           setStates(data);
           map.off('sourcedata', setAfterLoad);
         }
