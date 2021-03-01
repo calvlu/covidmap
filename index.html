@@ -146,7 +146,7 @@
         },
         'filter': ['==', ['get', 'type'], 'state']
       });
-
+/*
       map.addLayer({
         'id': 'albersusa-line',
         'type': 'line',
@@ -166,7 +166,7 @@
         },
         'filter': ['==', ['get', 'type'], 'state']
       });
-
+*/
       map.on('mousemove', 'albersusa-fill', (e) => {
         if (e.features.length > 0) {
           if (hoveredStateId) {
@@ -196,7 +196,7 @@
         const description = `
         <h3>${e.features[0].properties.state_name}</h3>
         <p>Cases / 100k: ${Math.round(e.features[0].state.case_rate*100)/100}</p>`;
-
+        console.log(e.features[0].geometry)
         popup
           .setLngLat(e.lngLat)
           .setHTML(description)
