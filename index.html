@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>United States of Covid</title>
-  <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
-  <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
-  <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
-  <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
-  <script src="https://d3js.org/d3-format.v1.min.js"></script>
-
-  <style>
-    body { margin: 0; padding: 0; }
-  #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+<meta charset="utf-8">
+<title>United States of Covid</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
 </style>
 </head>
-
 <body>
 <style>
     .map-overlay {
@@ -41,6 +36,12 @@
         margin: 0 0 10px;
     }
 
+    .map-overlay .legend .bar {
+        height: 10px;
+        width: 100%;
+        background: linear-gradient(to right, #fca107, #7f3121);
+    }
+
     .map-overlay input {
         background-color: transparent;
         display: inline-block;
@@ -50,223 +51,104 @@
         cursor: ew-resize;
     }
 </style>
-  <div id="map"></div>
-  <div class="map-overlay top">
+
+<div id="map"></div>
+
+<div class="map-overlay top">
     <div class="map-overlay-inner">
         <h2>Red and blue states with new cases greater than 500 per 100,000 residents</h2>
         <label id="month"></label>
-        <input id="slider" type="range" min="0" max="7" step="1" value="0" />
+        <input id="slider" type="range" min="0" max="7" step="1" value="0">
     </div>
 
 </div>
-</body>
-<script type="text/javascript">
-  mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fsdmx1IiwiYSI6ImNraDVrdno0MzBtcXEycW92dGtqbmRzOGMifQ.DcBDLkgaiyFIsaEr_389Xw';
-  const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/calvlu/cki5qjkky0zie19qv3pb1ov7f',
-    zoom: 4.3,
-    center: [-3.632, 0.339]
-  });
-  var months = [
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November'
-  ];
 
-  let setMonth = 0;
-
-  function filterBy(month) {
-    setMonth = month + 4;
-    //feature state does not work with filters
-    //var filters = ['==', ['get', 'month'], month];
-    //map.setFilter('albersusa-fill', filters);
-    //map.setFilter('albersusa-line', filters);
-
-    // Set the label to the month
-    document.getElementById('month').textContent = months[month];
-  }
-
-
-  let hoveredStateId = null;
-
-  const popup = new mapboxgl.Popup({
-    closeButton: false,
-    closeOnClick: false
-  });
-
-  map.on('load', () => {
-
-    d3.csv("https://raw.githubusercontent.com/calvlu/covidmap/main/hotspots.csv").then((data) => {
-      initFeatureState(data)
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fsdmx1IiwiYSI6ImNraDVrdno0MzBtcXEycW92dGtqbmRzOGMifQ.DcBDLkgaiyFIsaEr_389Xw';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/calvlu/ckm0jta9h3az217ovunmyuqjp',
+      center: [-3.632, 0.339],
+      zoom: 4.3
     });
 
-    const initFeatureState = (data) => {
-      map.addSource('albersusa', {
+    var months = [
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November'
+    ];
+
+    function filterBy(month) {
+      var filters = ['==', 'month', month + 4];
+      map.setFilter('covid-fill', filters);
+
+      // Set the label to the month
+      document.getElementById('month').textContent = months[month];
+    }
+
+    map.on('load', function() {
+      map.addSource('covidalbers', {
         type: 'vector',
-        url: 'mapbox://lobenichou.albersusa',
-        promoteId: 'state_fips'
+        url: 'mapbox://calvlu.92zvja9c'
       });
-
-
       map.addLayer({
-        'id': 'albersusa-fill',
+        'id': 'covid-fill',
         'type': 'fill',
-        'source': 'albersusa',
-        'source-layer': 'albersusa',
+        'source': 'covidalbers',
+        'source-layer': 'covidalbers',
         'paint': {
           'fill-color': [
-            "match", ["feature-state", "color"],
-            "b",
-            "#6BA0C7",
-            "r",
-            "#CE575E",
+            'match', ['get', 'color'],
+            'b', '#6BA0C7',
+            'r', '#CE575E',
             "#CCC"
-
           ],
-          'fill-opacity': 0.9
-          /*
-          'fill-color': ['case',
-            ['!=', ['feature-state', 'color'], null],
-            ['interpolate',
-              ['linear'],
-              ['to-number', ['feature-state', 'color']],
-              0, '#ece2f0',
-              // 5, '#a6bddb',
-              10, '#1c9099'
-            ],
-            'rgb(140, 140, 140)'
-          ]
-          */
-        },
-        'filter': ['==', ['get', 'type'], 'state']
-      });
-/*
-      map.addLayer({
-        'id': 'albersusa-line',
-        'type': 'line',
-        'source': 'albersusa',
-        'source-layer': 'albersusa',
-        'layout': {
-          'line-join': 'round',
-          'line-cap': 'round'
-        },
-        'paint': {
-          'line-color': '#4b4b4b',
-          'line-width': [
-            'case', ['boolean', ['feature-state', 'hover'], false],
-            2,
-            0
-          ]
-        },
-        'filter': ['==', ['get', 'type'], 'state']
-      });
-*/
-      map.on('mousemove', 'albersusa-fill', (e) => {
-        if (e.features.length > 0) {
-          if (hoveredStateId) {
-            map.setFeatureState({
-              source: 'albersusa',
-              'sourceLayer': 'albersusa',
-              id: hoveredStateId
-            }, {
-              hover: false
-            });
-          }
-          hoveredStateId = e.features[0].id;
-          map.setFeatureState({
-            source: 'albersusa',
-            'sourceLayer': 'albersusa',
-            id: hoveredStateId
-          }, {
-            hover: true
-          });
+          'fill-opacity': 0.9,
+          'fill-outline-color': '#fff'
         }
-      });
+      }, 'state-boundaries');
 
 
-      map.on('mousemove', 'albersusa-fill', (e) => {
 
-        map.getCanvas().style.cursor = 'pointer';
-        const description = `
-        <h3>${e.features[0].properties.state_name}</h3>
-        <p>Cases / 100k: ${Math.round(e.features[0].state.case_rate*100)/100}</p>`;
-        console.log(e.features[0].geometry)
-        popup
-          .setLngLat(e.lngLat)
-          .setHTML(description)
-          .addTo(map);
-      });
-
-      map.on('mouseleave', 'albersusa-fill', () => {
-        if (hoveredStateId) {
-          map.setFeatureState({
-            source: 'albersusa',
-            'sourceLayer': 'albersusa',
-            id: hoveredStateId
-          }, {
-            hover: false
-          });
-        }
-        hoveredStateId = null;
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-      });
-      //what is this
-      //filterBy(0);
+      // Set filter to first month of the year
+      // 0 = January
+      filterBy(0);
 
       document
         .getElementById('slider')
         .addEventListener('input', function(e) {
-          //remove here?
-          map.removeFeatureState({
-            source: 'albersusa',
-            sourceLayer: 'albersusa'
-          });
-          var m = parseInt(e.target.value, 10);
-          filterBy(m);
-          setStates(data);
-
+          var month = parseInt(e.target.value, 10);
+          filterBy(month);
         });
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
 
-      const setStates = (data) => {
-        data.forEach((row) => {
+      map.on('mousemove', 'covid-fill', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
 
-          if (row.month == setMonth) {
-            map.setFeatureState({
-              source: 'albersusa',
-              'sourceLayer': 'albersusa',
-              id: row.fips
-            }, {
-              color: row.color,
-              case_rate: row.case_rate,
-              month: row.month
-            })
-          }
-        })
-      }
+        var description = `<h3>${e.features[0].properties.state}</h3>
+          <p>Cases / 100k: ${Math.round(e.features[0].properties.case_rate*100)/100}</p>`;
 
-      const setAfterLoad = (e) => {
-        if (e.sourceId === 'albersusa' && e.isSourceLoaded) {
-          if (setMonth == 0) {
-            filterBy(0);
-          }
-          setStates(data);
-          map.off('sourcedata', setAfterLoad);
-        }
-      }
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
+      });
 
-      if (map.isSourceLoaded('albersusa')) {
-        setStates(data);
-      } else {
-        map.on('sourcedata', setAfterLoad);
-      }
-    }
-  })
+      map.on('mouseleave', 'covid-fill', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+    });
 </script>
+
+</body>
 </html>
