@@ -9,14 +9,14 @@
     });
 
     var months = [
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November'
+      'April 2020',
+      'May 2020',
+      'June 2020',
+      'July 2020',
+      'August 2020',
+      'September 2020',
+      'October 2020',
+      'November 2020'
     ];
 
     function filterBy(month) {
