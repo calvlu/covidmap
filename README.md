@@ -1,6 +1,6 @@
 # Red State, Blue State, The United States of Covid
 
-![Alt text](covidmap.gif)
+[![Alt text](covidmap.gif)](https://calvlu.github.io/covidmap/)
 
 Like many people, my pre-election assumption was that the October wave of Covid cases would hurt Trumps re-election chances. I originally wanted to build a map showing that, but after seeing the election results that assumption no longer seems to be true.
 
