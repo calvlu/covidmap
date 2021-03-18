@@ -1,5 +1,7 @@
 # Red State, Blue State, The United States of Covid
 
+![Alt text](covidmap.gif)
+
 Like many people, my pre-election assumption was that the October wave of Covid cases would hurt Trumps re-election chances. I originally wanted to build a map showing that, but after seeing the election results that assumption no longer seems to be true.
 
 As [Nate Cohn described](https://www.nytimes.com/2020/11/10/upshot/polls-what-went-wrong.html):
